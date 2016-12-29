@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "string"
+#include "QString"
 #include "iostream"
+#include "string"
+#include "sstream"
 using namespace std;
 
 namespace Ui {
@@ -15,20 +17,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    void show_log(){
-        std::cout << "number0 = " << number0 << std::endl;
-        std::cout << "sign = " << sign << std::endl;
-        std::cout << "number1 = " << number1 << std::endl;
-        std::cout << "result = " << result << std::endl;
-    }
+    int handle_input(int sign);//处理输入值
+    void init_all();//初始化所有变量
+    void show_LCD(QString str);//LCD显示变量
+    int sign_to_int(QString input);//输入字符转int代号，详见符号代号对应表
+    QString int_to_QString(int input);//int代号转字符
+    QString compute();
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-private:
-    int handle_number(int num);
-    int handle_sign(char s);
-    int to_LCD(QString r);
-    void init_all();
 
 private slots:
     void on_pushButton_clicked();
@@ -51,12 +47,16 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    int point_flag = 0;
-    int flag = 0;
-    float number0 = 0;
-    char sign = 0;
-    float number1 = 0;
-    float result = 0;
+    float number1;
+    QString symbol;//+-*/
+    float number2;
+    float result;
+    int now;
+    int next;
+    int flag;
+    QString numberstr1;//number1的字符串
+    QString numberstr2;
+    QString R;//结果的字符串
 
     QString number_str = "";
 };
